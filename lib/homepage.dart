@@ -12,6 +12,18 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: FloatingActionButton(
+          onPressed: () {
+            Navigator.pushNamed(context, '/second');
+          },
+          child: Icon(Icons.keyboard_arrow_right),
+        ),
+      ),
+    );
   }
 }
