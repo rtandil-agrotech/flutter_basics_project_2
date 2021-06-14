@@ -5,9 +5,9 @@ void main() {
   test('Testing Covid Api', () async {
     final CovidApi api = CovidApi();
 
-    final result = await api.getCovidDataIndonesia();
+    final Map result = await api.getCovidDataIndonesia();
 
-    print(result.keys);
+    print('keys: ${result.keys}, values: ${result.values}');
 
     expect(result is Map, true);
   });

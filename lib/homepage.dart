@@ -26,11 +26,7 @@ class _HomePageState extends State<HomePage> {
               padding: EdgeInsets.symmetric(vertical: 20),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => SecondPage(),
-                    ),
-                  );
+                  Navigator.of(context).pushNamed('/second');
                 },
                 child: Text("Get Covid Data Indonesia"),
               ),

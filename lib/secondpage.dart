@@ -11,6 +11,14 @@ class SecondPage extends StatefulWidget {
 class _SecondPageState extends State<SecondPage> {
   final CovidApi api = CovidApi();
 
+  late Future<Map<String, dynamic>> future;
+
+  @override
+  void initState() {
+    future = api.getCovidDataIndonesia();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,24 +29,24 @@ class _SecondPageState extends State<SecondPage> {
       ),
       body: Center(
         child: FutureBuilder(
-          future: api.getCovidDataIndonesia(),
+          future: future,
           builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              print(snapshot.data);
-              Map<String, dynamic> data = snapshot.data as Map<String, dynamic>;
+            if (snapshot.connectionState == ConnectionState.done) {
+              final Map<String, dynamic> json =
+                  snapshot.data as Map<String, dynamic>;
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Country : ${data['name']}'),
-                  Text('Positive: ${data['positif']}'),
-                  Text('Sembuh: ${data['sembuh']}'),
-                  Text('Meninggal: ${data['Meninggal']}')
+                  Text('Country: ${json['country']}'),
+                  Text('Confirmed: ${json['confirmed']} people'),
+                  Text('Recovered: ${json['recovered']} people'),
+                  Text('Death: ${json['deaths']} people'),
                 ],
               );
             } else if (snapshot.connectionState == ConnectionState.waiting) {
               return CircularProgressIndicator();
             }
-            return Text('No Data Found');
+            return Text('Connection Failed');
           },
         ),
       ),

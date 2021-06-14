@@ -3,17 +3,25 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class CovidApi {
-  final http.Client _client = http.Client();
+  final http.Client _client;
 
-  Future getCovidDataIndonesia() async {
-    final Uri url = Uri.parse('https://api.kawalcorona.com/indonesia');
+  CovidApi({http.Client? client}) : _client = client ?? http.Client();
 
-    await Future.delayed(Duration(seconds: 2));
+  Future<Map<String, dynamic>> getCovidDataIndonesia() async {
+    final Uri url =
+        Uri.parse('https://covid19-api.com/country?name=Indonesia&format=json');
 
-    final http.Response response = await _client.get(url);
+    try {
+      await Future.delayed(Duration(seconds: 1));
 
-    List<dynamic> responseData = jsonDecode(response.body);
+      final http.Response response = await _client.get(url);
 
-    return responseData.first;
+      List<dynamic> responseData = jsonDecode(response.body);
+
+      return responseData.first;
+    } catch (exception) {
+      print(exception);
+      throw Exception(exception);
+    }
   }
 }
