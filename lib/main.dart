@@ -21,14 +21,39 @@ class App extends StatelessWidget {
         ).copyWith(secondary: Colors.blue),
       ),
       initialRoute: '/',
-      routes: Router().routes,
+      onGenerateRoute: RouteManager.generateRoute,
     );
   }
 }
 
-class Router {
-  Map<String, Widget Function(BuildContext)> routes = {
-    '/': (context) => HomePage(title: 'This is Homepage'),
-    '/second': (context) => SecondPage(title: 'This is Secondpage'),
-  };
+class RouteManager {
+  static Route<dynamic> generateRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case '/':
+        return MaterialPageRoute(
+            builder: (_) => HomePage(title: 'This is Home Page'));
+      case '/second':
+        return MaterialPageRoute(
+            builder: (_) => SecondPage(title: 'This is Second Page'));
+      default:
+        return MaterialPageRoute(
+            builder: (_) => _DefaultRouteErrorPage(settings: settings));
+    }
+  }
+}
+
+class _DefaultRouteErrorPage extends StatelessWidget {
+  _DefaultRouteErrorPage({required RouteSettings settings})
+      : _settings = settings;
+
+  final RouteSettings _settings;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Text('No route defined for ${_settings.name}'),
+      ),
+    );
+  }
 }
