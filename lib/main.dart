@@ -9,6 +9,9 @@ void main() {
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
 
+  //TODO: Step 2
+  // Setup Navigation to Page 2 from Page 1 with one of the three navigation methods
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
