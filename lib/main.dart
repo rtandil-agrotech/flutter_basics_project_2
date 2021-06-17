@@ -1,9 +1,5 @@
-import 'dart:convert';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_basics_project_2/secondpage.dart';
-import 'package:http/http.dart' as http;
 
 import 'homepage.dart';
 
